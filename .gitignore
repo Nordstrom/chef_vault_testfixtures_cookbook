@@ -1,0 +1,40 @@
+# OS generated files #
+######################
+.DS_Store
+Icon?
+nohup.out
+ehthumbs.db
+Thumbs.db
+
+# SASS #
+########
+.sass-cache
+
+# EDITORS #
+###########
+\#*
+.#*
+*~
+*.sw[a-z]
+*.bak
+REVISION
+TAGS*
+tmtags
+*_flymake.*
+*_flymake
+*.tmproj
+mkmf.log
+
+# Vagrant #
+###########
+.vagrant/*
+
+# Bundler #
+###########
+bin/*
+vendor/*
+.bundle/*
+
+# Test Kitchen #
+################
+.kitchen/*

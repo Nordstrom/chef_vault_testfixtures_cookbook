@@ -1,0 +1,7 @@
+DEPENDENCIES
+  chef_vault_testfixtures
+    path: .
+    metadata: true
+
+GRAPH
+  chef_vault_testfixtures (0.1.0)

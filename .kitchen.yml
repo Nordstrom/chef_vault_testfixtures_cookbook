@@ -1,0 +1,111 @@
+<% proxy_vars = {} %>
+<% %w(http_proxy https_proxy no_proxy).each do |envvar| %>
+<%   if ENV.key?(envvar) %>
+<%     proxy_vars[envvar] = ENV[envvar] %>
+<%   end %>
+<% end %>
+---
+driver:
+  name: vagrant
+
+<% if proxy_vars.size > 0 %>
+driver_config:
+<% proxy_vars.each do |k, v| %>
+  <%= k %>: '<%= v %>'
+<% end %>
+<% end %>
+
+provisioner:
+  name: chef_zero
+<% if proxy_vars.size > 0 %>
+  client_rb:
+<% proxy_vars.each do |k, v| %>
+    <%= k %>: '<%= v %>'
+<% end %>
+<% end %>
+
+platforms:
+  - name: ubuntu-12.04
+  - name: ubuntu-14.04
+  - name: centos-6.6
+  - name: centos-7.0
+
+suites:
+  - name: plugins_chef_gem
+    run_list:
+      - recipe[testsetup::plugins_chef_gem]
+      - recipe[chef_vault_testfixtures::default]
+      - recipe[testsetup::render_secret_foo]
+      - recipe[testsetup::render_secret_bar]
+    attributes:
+      chef_vault_testfixtures:
+        install_gems:
+          chef-vault-testfixture-plugin-foo:
+            source: /tmp/kitchen/chef-vault-testfixture-plugin-foo-0.1.0.gem
+            version: 0.1.0
+          chef-vault-testfixture-plugin-bar:
+            source: /tmp/kitchen/chef-vault-testfixture-plugin-bar-0.1.0.gem
+            version: 0.1.0
+  - name: plugins_chef_gem_chef11
+    driver_config:
+      require_chef_omnibus: 11.18.0
+    run_list:
+      - recipe[testsetup::plugins_chef_gem]
+      - recipe[chef_vault_testfixtures::default]
+      - recipe[testsetup::render_secret_foo]
+      - recipe[testsetup::render_secret_bar]
+    attributes:
+      chef_vault_testfixtures:
+        install_gems:
+          chef-vault-testfixture-plugin-foo:
+            source: /tmp/kitchen/chef-vault-testfixture-plugin-foo-0.1.0.gem
+            version: 0.1.0
+          chef-vault-testfixture-plugin-bar:
+            source: /tmp/kitchen/chef-vault-testfixture-plugin-bar-0.1.0.gem
+            version: 0.1.0
+  - name: plugins_git
+    run_list:
+      - recipe[testsetup::plugins_git]
+      - recipe[chef_vault_testfixtures::default]
+      - recipe[testsetup::render_secret_foo]
+      - recipe[testsetup::render_secret_bar]
+    attributes:
+      chef_vault_testfixtures:
+        install_gems:
+          chef-vault-testfixture-plugin-foo:
+            install_type: git
+            repository: file:///tmp/kitchen/chef-vault-testfixture-plugin-foo
+          chef-vault-testfixture-plugin-bar:
+            install_type: git
+            repository: file:////tmp/kitchen/chef-vault-testfixture-plugin-bar
+            revision: my_fix_to_bar
+  - name: plugins_whitelist
+    run_list:
+      - recipe[testsetup::plugins_chef_gem]
+      - recipe[chef_vault_testfixtures::default]
+      - recipe[testsetup::render_secret_foo]
+    attributes:
+      chef_vault_testfixtures:
+        plugins: [ foo ]
+        install_gems:
+          chef-vault-testfixture-plugin-foo:
+            source: /tmp/kitchen/chef-vault-testfixture-plugin-foo-0.1.0.gem
+            version: 0.1.0
+          chef-vault-testfixture-plugin-bar:
+            source: /tmp/kitchen/chef-vault-testfixture-plugin-bar-0.1.0.gem
+            version: 0.1.0
+  - name: plugins_blacklist
+    run_list:
+      - recipe[testsetup::plugins_chef_gem]
+      - recipe[chef_vault_testfixtures::default]
+      - recipe[testsetup::render_secret_bar]
+    attributes:
+      chef_vault_testfixtures:
+        disregard_plugin: [ foo ]
+        install_gems:
+          chef-vault-testfixture-plugin-foo:
+            source: /tmp/kitchen/chef-vault-testfixture-plugin-foo-0.1.0.gem
+            version: 0.1.0
+          chef-vault-testfixture-plugin-bar:
+            source: /tmp/kitchen/chef-vault-testfixture-plugin-bar-0.1.0.gem
+            version: 0.1.0
