@@ -25,13 +25,63 @@ provisioner:
 <% end %>
 
 platforms:
+  - name: ubuntu-12.04-11.10.4
+    driver:
+      require_chef_omnibus: 11.10.4
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
+  - name: ubuntu-12.04-11.12.8
+    driver:
+      require_chef_omnibus: 11.12.8
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
+  - name: ubuntu-12.04-11.14.6
+    driver:
+      require_chef_omnibus: 11.14.6
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
+  - name: ubuntu-12.04-11.16.4
+    driver:
+      require_chef_omnibus: 11.16.4
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
+  - name: ubuntu-12.04-11.18.6
+    driver:
+      require_chef_omnibus: 11.18.6
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
   - name: ubuntu-12.04
   - name: ubuntu-14.04
+  - name: centos-6.6-11.10.4
+    driver:
+      require_chef_omnibus: 11.10.4
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.6_chef-provisionerless.box
+  - name: centos-6.6-11.12.8
+    driver:
+      require_chef_omnibus: 11.12.8
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.6_chef-provisionerless.box
+  - name: centos-6.6-11.14.6
+    driver:
+      require_chef_omnibus: 11.14.6
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.6_chef-provisionerless.box
+  - name: centos-6.6-11.16.4
+    driver:
+      require_chef_omnibus: 11.16.4
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.6_chef-provisionerless.box
+  - name: centos-6.6-11.18.6
+    driver:
+      require_chef_omnibus: 11.18.6
+      box: opscode-ubuntu-12.04
+      box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.6_chef-provisionerless.box
   - name: centos-6.6
   - name: centos-7.0
 
 suites:
-  - name: plugins_chef_gem
+  - name: chef_gem
     run_list:
       - recipe[testsetup::plugins_chef_gem]
       - recipe[chef_vault_testfixtures::default]
@@ -46,24 +96,7 @@ suites:
           chef-vault-testfixture-plugin-bar:
             source: /tmp/kitchen/chef-vault-testfixture-plugin-bar-0.1.0.gem
             version: 0.1.0
-  - name: plugins_chef_gem_chef11
-    driver_config:
-      require_chef_omnibus: 11.18.0
-    run_list:
-      - recipe[testsetup::plugins_chef_gem]
-      - recipe[chef_vault_testfixtures::default]
-      - recipe[testsetup::render_secret_foo]
-      - recipe[testsetup::render_secret_bar]
-    attributes:
-      chef_vault_testfixtures:
-        install_gems:
-          chef-vault-testfixture-plugin-foo:
-            source: /tmp/kitchen/chef-vault-testfixture-plugin-foo-0.1.0.gem
-            version: 0.1.0
-          chef-vault-testfixture-plugin-bar:
-            source: /tmp/kitchen/chef-vault-testfixture-plugin-bar-0.1.0.gem
-            version: 0.1.0
-  - name: plugins_git
+  - name: git
     run_list:
       - recipe[testsetup::plugins_git]
       - recipe[chef_vault_testfixtures::default]
@@ -79,7 +112,7 @@ suites:
             install_type: git
             repository: file:////tmp/kitchen/chef-vault-testfixture-plugin-bar
             revision: my_fix_to_bar
-  - name: plugins_whitelist
+  - name: whitelist
     run_list:
       - recipe[testsetup::plugins_chef_gem]
       - recipe[chef_vault_testfixtures::default]
@@ -94,7 +127,7 @@ suites:
           chef-vault-testfixture-plugin-bar:
             source: /tmp/kitchen/chef-vault-testfixture-plugin-bar-0.1.0.gem
             version: 0.1.0
-  - name: plugins_blacklist
+  - name: blacklist
     run_list:
       - recipe[testsetup::plugins_chef_gem]
       - recipe[chef_vault_testfixtures::default]

@@ -18,6 +18,10 @@ default['chef_vault_testfixtures']['disregard_plugin'] = []
 # overrride this to install plugin gems before creating the vaults
 default['chef_vault_testfixtures']['install_gems'] = {}
 
+# override this to change what version of the chef-vault-testfixtures
+# gem is installed by the cookbook
+default['chef_vault_testfixtures']['gem_version'] = '~> 0.2'
+
 # example: install using chef_gem from Rubygems or an internal Geminabox
 # default['chef_vault_testfixtures']['install_gems'].tap |o|
 #   o['my_vault_testfixtures'].tap |gem|

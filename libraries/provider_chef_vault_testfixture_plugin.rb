@@ -73,9 +73,7 @@ class Chef
       # @param nr [Chef::Resource] the resource
       # @return [String] the path the git repo was cloned to
       def clone_git_repo(nr)
-        checkout_path = ::File.join(
-          Chef::Config[:file_cache_path], nr.gem_name
-        )
+        checkout_path = ::File.join(Chef::Config[:file_cache_path], nr.gem_name)
         at_compile_time do
           git checkout_path do
             action :checkout

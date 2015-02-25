@@ -4,4 +4,4 @@ DEPENDENCIES
     metadata: true
 
 GRAPH
-  chef_vault_testfixtures (0.1.0)
+  chef_vault_testfixtures (0.1.1)

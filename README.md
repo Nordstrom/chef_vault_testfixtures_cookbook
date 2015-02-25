@@ -35,20 +35,27 @@ assume you are using Berkshelf for cookbook dependency management.
 In your `Berksfile`, add a snippet that pulls this cookbook into a test group:
 
     group :test do
-      cookbook 'chef_vault_testfixtures', '~> 0.1'
+      cookbook 'chef_vault_testfixtures', '~> 0.2'
     end
 
-In your `.kitchen.yml`, add this cookbook to the run list for each suite:
+In your `.kitchen.yml`, add this cookbook to the run list for each suite
+and which fixture data plugins to install:
 
     suites:
       - name: default
         run_list:
           - recipe[chef_vault_testfixtures]
           - recipe[your_normal_cookbook_here]
+        attributes:
+          chef_vault_testfixtures:
+            install_gems:
+              chef-vault-testfixtures-myapp:
+                install_type: git
+                repository: https://github.com/myusername/chef-vault-testfixtures-myapp.git
 
 When Test Kitchen converges your cookbook, it will create a new
 client identity (including a public/private keypair).  This cookbook
-will then create a vaultitem for each plugin that
+will then create a vaultitem for each plugin that it finds.
 
 ## Recipes
 
@@ -71,6 +78,7 @@ Attribute | Description | Type   | Default
 plugins | List of plugins to load | Array | [] (means load all)
 disregard_plugin | List of plugins to not load | Array | []
 install_gems | Hash of plugin gems to install | Hash | see below
+gem_version | constrain chef-vault-testfixtures gem version | String | ~> 0.2
 
 ## Specifying Plugins
 
@@ -86,15 +94,18 @@ cookbook in `.kitchen.yml`:
         attributes:
           chef_vault_testfixtures:
             install_gems:
-              my_vault_plugin_db: {}
-              my_vault_plugin_rmq:
+              chef-vault-testfixtures-db: {}
+              chef-vault-testfixtures-rmq:
                 install_type: git
-                repository: https://github.com/myusername/my_chef_vault_rmq_plugin.git
+                repository: https://github.com/myusername/chef-vault-testfixtures-rmq.git
                 revision: my_fix_branch
 
 The install_gems attribute is a hash.  The keys are the names of the
 vault plugins to install and the values tell the cookbook how to install
 the plugin.
+
+Note that the name of the vault plugin in .kitchen.yml must match the name
+of the gem (on Rubygems or in the gemspec in a git repo).
 
 The value is a Hash that can contain the following keys:
 
@@ -119,7 +130,7 @@ do things like use an internal Geminabox server:
     attributes:
       chef_vault_testfixtures:
         install_gems:
-          db:
+          chef-vault-testfixtures-db:
             options: --clear-sources --no-rdoc --no-ri --source https://gems.mycompany.int
 
 ### git installation method
@@ -200,7 +211,7 @@ to use.
     chef_vault_testfixture_plugin 'my_vault_fixture_plugin' do
       action :nothing
       install_type 'git'
-      repository 'https://git.mycompany.int/scm/gems/my_vault_testfixtures.git'
+      repository 'https://git.mycompany.int/scm/gems/my_vault_fixture_plugin.git'
       revision 'v1.2.3'
     end
     c.run_action(:install)
@@ -307,12 +318,27 @@ to start over and create a new node, client, and keypair.
 
 ## Supported Platforms
 
-This cookbook is tested under Test Kitchen for the following platforms:
+This cookbook is tested under Test Kitchen for the following platforms
+and chef-client combinations:
 
 * ubuntu-12.04
+  * chef-client 11.10.4
+  * chef-client 11.12.8
+  * chef-client 11.14.6
+  * chef-client 11.16.4
+  * chef-client 11.18.6
+  * chef-client latest
 * ubuntu-14.04
+  * chef-client latest
 * centos-6.6
+  * chef-client 11.10.4
+  * chef-client 11.12.8
+  * chef-client 11.14.6
+  * chef-client 11.16.4
+  * chef-client 11.18.6
+  * chef-client latest
 * centos-7.0
+  * chef-client latest
 
 ## Author
 

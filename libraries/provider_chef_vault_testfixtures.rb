@@ -4,6 +4,7 @@ class Chef
   class Provider
     # provides the chef_vault_testfixtures_plugin resource
     class ChefVaultTestfixtures < Chef::Provider::LWRPBase
+      include Chef::DSL::IncludeRecipe
       include ChefVaultTestFixtures::AtCompileTime
 
       use_inline_resources if defined?(use_inline_resources)
@@ -15,6 +16,7 @@ class Chef
       # dispatches to install_chef_gem or install_git based on
       # the install_type attribute of the resource
       action :create do
+        include_recipe 'chef_vault_testfixtures::_install_chefvault_gems'
         require 'chef-vault/test_fixtures'
 
         # set the plugin white/black lists from our attributes
