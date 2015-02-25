@@ -15,6 +15,7 @@ class Chef
       # dispatches to install_chef_gem or install_git based on
       # the install_type attribute of the resource
       action :create do
+        include_recipe 'chef_vault_testfixtures::_install_chefvault_gems'
         require 'chef-vault/test_fixtures'
 
         # make sure we have a plugin by that name
