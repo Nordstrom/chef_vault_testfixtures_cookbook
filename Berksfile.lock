@@ -2,6 +2,9 @@ DEPENDENCIES
   chef_vault_testfixtures
     path: .
     metadata: true
+  testsetup
+    path: test/fixtures/cookbooks/testsetup
 
 GRAPH
-  chef_vault_testfixtures (0.1.1)
+  chef_vault_testfixtures (0.2.0)
+  testsetup (0.1.0)

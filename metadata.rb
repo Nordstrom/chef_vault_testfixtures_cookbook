@@ -7,7 +7,7 @@ maintainer       'Nordstrom, Inc.'
 maintainer_email 'james.i.fitzgibbon@nordstrom.com'
 license          'apache2'
 description      'Sets up testing fixtures for cookbooks using chef-vault'
-version          '0.1.1'
+version          '0.2.0'
 
 supports         'ubuntu', '= 12.04'
 supports         'ubuntu', '= 14.04'
