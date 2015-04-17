@@ -1,4 +1,8 @@
-# Revision History for chef_vault_testfixtures cookbook 
+# Revision History for chef_vault_testfixtures cookbook
+
+## 0.2.0
+
+* deprecate in favor of the chef-vault cookbook.  The gem that powered this cookbook now uses the same JSON file as the chef_vault_item helper so you only have to maintain one source of test data for your vaults
 
 ## 0.1.1
 
