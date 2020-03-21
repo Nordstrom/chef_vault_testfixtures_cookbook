@@ -16,7 +16,7 @@ group :test do
   gem 'ci_reporter_rspec', '~> 1.0'
   gem 'test-kitchen', '~> 1.3'
   gem 'kitchen-vagrant', '~> 0.15'
-  gem 'berkshelf', '~> 3.1'
+  gem 'berkshelf', '~> 3.2', '>= 3.2.3'
   # pin to 2.8 series until guard-foodcritic has been updated for v2 API
   gem 'guard', '~> 2.8.2'
   # pin to 4.3 series until guard-foodcritic has been updated for v2 API
